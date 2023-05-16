@@ -10,7 +10,7 @@
         },
         "files": [
           {
-            "name": "{{pascal name}}.js",
+            "name": "{{pascal name}}.tsx",
             "content": [
               "import React from 'react'",
               "import PropTypes from 'prop-types'",
@@ -44,7 +44,7 @@
             ]
           },
           {
-            "name": "index.js",
+            "name": "index.tsx",
             "content": [
               "export * from './{{pascal name}}'",
               "export { default } from './{{pascal name}}'",
