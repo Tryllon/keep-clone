@@ -23,7 +23,7 @@ function NotesApp (): React.ReactElement {
   }, [])
 
   useEffect(() => {
-    fetchNotes()
+    void fetchNotes()
   }, [])
 
   return (
@@ -43,25 +43,24 @@ function NotesApp (): React.ReactElement {
           : null
       }
       {
-        (notes === null)
+        (notes.length === 0)
           ? <div>
             No data
             </div>
           : null
       }
       {
-        (notes.length > 0)
-          ? <div>
-            {notes.map((note, i) => (
-              <div
-                key={i}
-              >
-                {note}
-              </div>
-            ))}
-            </div>
-          : null
-      }
+      notes?.map((note) => {
+        const { id, value } = note
+        return (
+          <div
+            key={id}
+          >
+            {value}
+          </div>
+        )
+      })}
+
     </div>
   )
 }
