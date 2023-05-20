@@ -1,11 +1,23 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import loadNotes from './api/loadNotes'
+import { useAppContext } from './contexts/AppContext'
 
 function NotesApp (): React.ReactElement {
-  const [isLoading, setIsLoading] = useState(false)
-  const [hasError, setHasError] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
-  const [notes, setNotes] = useState([])
+  // const [isLoading, setIsLoading] = useState(false)
+  // const [hasError, setHasError] = useState(false)
+  // const [errorMessage, setErrorMessage] = useState('')
+  // const [notes, setNotes] = useState([])
+
+  const {
+    isLoading,
+    setIsLoading,
+    hasError,
+    setHasError,
+    errorMessage,
+    setErrorMessage,
+    notes,
+    setNotes
+  } = useAppContext()
 
   const fetchNotes = useCallback(async () => {
     setIsLoading(() => true)
@@ -30,33 +42,38 @@ function NotesApp (): React.ReactElement {
     <div>
       {
         isLoading
-          ? <div>
-            Loading...
+          ? (
+            <div>
+              Loading...
             </div>
+            )
           : null
       }
       {
         hasError
-          ? <div>
-            {errorMessage}
+          ? (
+            <div>
+              {errorMessage}
             </div>
+            )
           : null
       }
       {
         (notes.length === 0)
-          ? <div>
-            No data
+          ? (
+            <div>
+              No data
             </div>
+            )
           : null
       }
       {
-      notes?.map((note) => {
-        const { id, value } = note
+      notes?.map((note: { id: string, title: string, contents: string }) => {
         return (
           <div
-            key={id}
+            key={note.id}
           >
-            {value}
+            {note.contents}
           </div>
         )
       })}
