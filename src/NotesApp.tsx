@@ -1,7 +1,8 @@
 import React, { useEffect, useCallback } from 'react'
-import loadNotes from './api/loadNotes'
+import { loadNotes, create } from './api'
 import { useAppContext } from './contexts/AppContext'
 import ShowNotes from './components/ShowNotes'
+import Form from './components/Form'
 
 function NotesApp (): React.ReactElement {
   const {
@@ -26,6 +27,25 @@ function NotesApp (): React.ReactElement {
       setErrorMessage('error')
       console.log(error)
     } finally {
+      setIsLoading(() => false)
+    }
+  }, [])
+  const createNote = useCallback(async (title: string, contents: string) => {
+    console.log(title, contents)
+    const newNoteData = {
+      id: Date.now(),
+      title,
+      contents
+    }
+    setIsLoading(() => true)
+    try {
+      await create(newNoteData)
+    } catch (error) {
+      setHasError(() => true)
+      setErrorMessage('error')
+      console.log(error)
+    } finally {
+      await fetchNotes()
       setIsLoading(() => false)
     }
   }, [])
@@ -63,6 +83,7 @@ function NotesApp (): React.ReactElement {
             )
           : null
       }
+      <Form createNote={createNote}/>
       <ShowNotes/>
     </div>
   )
