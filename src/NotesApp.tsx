@@ -1,13 +1,9 @@
 import React, { useEffect, useCallback } from 'react'
 import loadNotes from './api/loadNotes'
 import { useAppContext } from './contexts/AppContext'
+import ShowNotes from './components/ShowNotes'
 
 function NotesApp (): React.ReactElement {
-  // const [isLoading, setIsLoading] = useState(false)
-  // const [hasError, setHasError] = useState(false)
-  // const [errorMessage, setErrorMessage] = useState('')
-  // const [notes, setNotes] = useState([])
-
   const {
     isLoading,
     setIsLoading,
@@ -67,17 +63,7 @@ function NotesApp (): React.ReactElement {
             )
           : null
       }
-      {
-      notes?.map((note: { id: string, title: string, contents: string }) => {
-        return (
-          <div
-            key={note.id}
-          >
-            {note.contents}
-          </div>
-        )
-      })}
-
+      <ShowNotes/>
     </div>
   )
 }
