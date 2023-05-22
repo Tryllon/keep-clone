@@ -1,3 +1,15 @@
+# Notes app 
+
+## General info
+This project is simple Notes app
+
+## Technologies
+Project is created with:
+* React 
+* TypeScript
+* Material UI
+* StoryBook
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
