@@ -12,7 +12,6 @@ function NotesApp (): React.ReactElement {
     setHasError,
     errorMessage,
     setErrorMessage,
-    notes,
     setNotes
   } = useAppContext()
 
@@ -83,15 +82,6 @@ function NotesApp (): React.ReactElement {
           ? (
             <div>
               {errorMessage}
-            </div>
-            )
-          : null
-      }
-      {
-        (notes.length === 0)
-          ? (
-            <div>
-              No data
             </div>
             )
           : null

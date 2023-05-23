@@ -15,6 +15,7 @@ interface UserContextInterface {
   setHasError: Dispatch<SetStateAction<boolean>>
   setErrorMessage: Dispatch<SetStateAction<string>>
   setNotes: Dispatch<SetStateAction<any>>
+  // what type in SetStateAction
 }
 
 interface Props {
@@ -34,13 +35,13 @@ const initialContextState: UserContextInterface = {
 
 export const AppContext = createContext(initialContextState)
 
+// what type is return
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const useAppContext = () => {
   const appContextValue = useContext(AppContext)
   return appContextValue
 }
 export const AppContextProvider = (props: Props): React.ReactElement => {
-  // eslint-disable-next-line react/prop-types
   const { children } = props
 
   const [isLoading, setIsLoading] = useState(initialContextState.isLoading)
