@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Container, TextField, Box, Typography, Button, Paper } from '@mui/material'
+import { Container, TextField, Box, Typography, Button } from '@mui/material'
 import { useForm, Controller } from 'react-hook-form'
+import { Message } from '../Message'
 
 interface Props {
   createNote: any
@@ -116,48 +117,10 @@ export const Form = (props: Props): React.ReactElement => {
       </Box>
       {popUp
         ? (
-          <Box
-            sx={{
-              position: 'absolute',
-              display: 'flex',
-              top: 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              justifyContent: 'center',
-              alignItems: 'center',
-              zIndex: 999,
-              backgroundColor: 'rgba(0, 0, 0, 0.7);'
-            }}
-          >
-            <Paper
-              elevation={3}
-              sx={{
-                position: 'fixed',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '300px',
-                height: '300px'
-              }}
-            >
-              <Typography
-                variant={'subtitle1'}
-                sx={{
-                  marginBottom: '20px'
-                }}
-              >
-                Note Added
-              </Typography>
-              <Button
-                variant={'contained'}
-                onClick={closePopUp}
-              >
-                Close
-              </Button>
-            </Paper >
-          </Box>
+          <Message
+            message={'Note Added'}
+            onButtonClick={closePopUp}
+          />
           )
         : null
     }
