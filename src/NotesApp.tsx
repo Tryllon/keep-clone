@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react'
-import { loadNotes, create } from './api'
+import { loadNotes, create, remove } from './api'
 import { useAppContext } from './contexts/AppContext'
 import ShowNotes from './components/ShowNotes'
 import Form from './components/Form'
@@ -49,6 +49,19 @@ function NotesApp (): React.ReactElement {
       setIsLoading(() => false)
     }
   }, [])
+  const deleteNote = useCallback(async (idNote: string) => {
+    setIsLoading(() => true)
+    try {
+      await remove(idNote)
+    } catch (error) {
+      setHasError(() => true)
+      setErrorMessage('error')
+      console.log(error)
+    } finally {
+      await fetchNotes()
+      setIsLoading(() => false)
+    }
+  }, [])
 
   useEffect(() => {
     void fetchNotes()
@@ -84,7 +97,7 @@ function NotesApp (): React.ReactElement {
           : null
       }
       <Form createNote={createNote}/>
-      <ShowNotes/>
+      <ShowNotes deleteNote={deleteNote}/>
     </div>
   )
 }

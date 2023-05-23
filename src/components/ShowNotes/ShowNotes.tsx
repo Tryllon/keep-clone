@@ -2,10 +2,17 @@ import React from 'react'
 import { Box } from '@mui/material'
 import List from '../List'
 
-export const ShowNotes = (): React.ReactElement => {
+interface Props {
+  deleteNote: any
+}
+
+export const ShowNotes = (props: Props): React.ReactElement => {
+  const {
+    deleteNote
+  } = props
   return (
     <Box>
-      <List/>
+      <List deleteNote={deleteNote}/>
     </Box>
   )
 }

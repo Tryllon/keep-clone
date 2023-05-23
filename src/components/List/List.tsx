@@ -3,7 +3,14 @@ import { Box } from '@mui/material'
 import { useAppContext } from '../../contexts/AppContext'
 import ListItem from '../ListItem'
 
-export const List = (): React.ReactElement => {
+interface Props {
+  deleteNote: any
+}
+
+export const List = (props: Props): React.ReactElement => {
+  const {
+    deleteNote
+  } = props
   const {
     notes
   } = useAppContext()
@@ -18,6 +25,8 @@ export const List = (): React.ReactElement => {
             key={id}
             title={title}
             contents={contents}
+            deleteNote={deleteNote}
+            id={id}
           />
         )
       })}
