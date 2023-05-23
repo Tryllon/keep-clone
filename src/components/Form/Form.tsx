@@ -1,23 +1,20 @@
-import React from 'react'
-import { Container, TextField, Box, Typography, Button } from '@mui/material'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Container, TextField, Box, Typography, Button, Paper } from '@mui/material'
 import { useForm, Controller } from 'react-hook-form'
-// import { useAppContext } from '../../contexts/AppContext'
 
 interface Props {
   createNote: any
 }
 
 export const Form = (props: Props): React.ReactElement => {
+  const [popUp, setPopUp] = useState(false)
   const { createNote } = props
   const {
     handleSubmit,
     control,
-    formState: { errors }
+    reset,
+    formState: { errors, isSubmitSuccessful }
   } = useForm()
-  // const {
-  //   setTitle,
-  //   setContents
-  // } = useAppContext()
 
   const onSubmit = handleSubmit(
     (data, e) => {
@@ -28,10 +25,25 @@ export const Form = (props: Props): React.ReactElement => {
       console.log('errors', errors)
     }
   )
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset()
+      setPopUp(() => true)
+    }
+  }, [isSubmitSuccessful, reset])
+
+  const closePopUp = useCallback(() => {
+    setPopUp(() => false)
+  }, [])
 
   return (
     <Container>
-      <Box>
+      <Box
+        textAlign={'center'}
+        sx={{
+          margin: '20px 0px'
+        }}
+      >
         <Typography
           variant={'h4'}
         >
@@ -56,6 +68,9 @@ export const Form = (props: Props): React.ReactElement => {
           defaultValue={''}
           render={({ field: { onChange, value } }) => (
             <TextField
+              sx={{
+                marginBottom: '15px'
+              }}
               fullWidth
               placeholder={'Title'}
               value={value}
@@ -79,6 +94,9 @@ export const Form = (props: Props): React.ReactElement => {
           defaultValue={''}
           render={({ field: { onChange, value } }) => (
             <TextField
+              sx={{
+                marginBottom: '15px'
+              }}
               fullWidth
               placeholder={'Start Type'}
               value={value}
@@ -96,6 +114,53 @@ export const Form = (props: Props): React.ReactElement => {
           Add Note
         </Button>
       </Box>
+      {popUp
+        ? (
+          <Box
+            sx={{
+              position: 'absolute',
+              display: 'flex',
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: 999,
+              backgroundColor: 'rgba(0, 0, 0, 0.7);'
+            }}
+          >
+            <Paper
+              elevation={3}
+              sx={{
+                position: 'fixed',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '300px',
+                height: '300px'
+              }}
+            >
+              <Typography
+                variant={'subtitle1'}
+                sx={{
+                  marginBottom: '20px'
+                }}
+              >
+                Note Added
+              </Typography>
+              <Button
+                variant={'contained'}
+                onClick={closePopUp}
+              >
+                Close
+              </Button>
+            </Paper >
+          </Box>
+          )
+        : null
+    }
 
     </Container>
   )
