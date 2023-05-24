@@ -49,16 +49,19 @@ function NotesApp (): React.ReactElement {
     }
   }, [])
   const deleteNote = useCallback(async (idNote: string) => {
-    setIsLoading(() => true)
-    try {
-      await remove(idNote)
-    } catch (error) {
-      setHasError(() => true)
-      setErrorMessage('error')
-      console.log(error)
-    } finally {
-      await fetchNotes()
-      setIsLoading(() => false)
+    const confirmation = confirm('Are you sure to delete this note?')
+    if (confirmation) {
+      setIsLoading(() => true)
+      try {
+        await remove(idNote)
+      } catch (error) {
+        setHasError(() => true)
+        setErrorMessage('error')
+        console.log(error)
+      } finally {
+        await fetchNotes()
+        setIsLoading(() => false)
+      }
     }
   }, [])
 
